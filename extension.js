@@ -53,60 +53,81 @@ background-image: none !important;
 `;
 
 function addStyle(styleString) {
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = styleString;
-  style.id='ih-theme-light-extension';
+  style.id = "ih-theme-light-extension";
   document.head.prepend(style);
 }
-let CODE = 'let CSS=`' + CSS.toString() + '`;' + addStyle.toString() + `;addStyle(CSS);`;
+let CODE =
+  "let CSS=`" + CSS.toString() + "`;" + addStyle.toString() + `;addStyle(CSS);`;
 
-chrome.webNavigation.onCommitted.addListener(function(o) {
-  chrome.pageAction.show(o.tabId);
-  chrome.tabs.executeScript(o.tabId, {runAt: "document_start", code: CODE});
-}, {
-  url: [{hostContains: 'indiehackers.com'}] 
+chrome.tabs.onUpdated.addListener(function(tabId, info) {
+  if (info.status === "complete") {
+    chrome.tabs.get(tabId, function(tab) {
+      try {
+        if (new URL(tab.url).host === "www.indiehackers.com") {
+          chrome.pageAction.show(tabId);
+          chrome.tabs.executeScript(tabId, {
+            runAt: "document_start",
+            code: CODE
+          });
+        }
+      } catch (err) {
+        // ignore, invalid url such as chrome://extensions
+      }
+    });
+  }
 });
 
-chrome.pageAction.onClicked.addListener(function (tab){
-   chrome.pageAction.getTitle({
-      "tabId": tab.id }, function(title){
-        if (title.indexOf('Light') !== -1){
-         chrome.pageAction.setTitle({
-            "tabId": tab.id, 'title': 'IndieHackers Dark Theme Enabled (click to toggle)'
-          });
+chrome.pageAction.onClicked.addListener(function(tab) {
+  chrome.pageAction.getTitle(
+    {
+      tabId: tab.id
+    },
+    function(title) {
+      if (title.indexOf("Light") !== -1) {
+        chrome.pageAction.setTitle({
+          tabId: tab.id,
+          title: "IndieHackers Dark Theme Enabled (click to toggle)"
+        });
 
-         chrome.pageAction.setIcon({
-            "tabId": tab.id, 'path': {
-              "16": "icons/ih-dark-16x16.png",
-              "24": "icons/ih-dark-24x24.png",
-              "32": "icons/ih-dark-32x32.png",        
-              "48": "icons/ih-dark-48x48.png",
-              "64": "icons/ih-dark-64x64.png",
-              "128": "icons/ih-dark-128x128.png"
-            }
-            });
+        chrome.pageAction.setIcon({
+          tabId: tab.id,
+          path: {
+            "16": "icons/ih-dark-16x16.png",
+            "24": "icons/ih-dark-24x24.png",
+            "32": "icons/ih-dark-32x32.png",
+            "48": "icons/ih-dark-48x48.png",
+            "64": "icons/ih-dark-64x64.png",
+            "128": "icons/ih-dark-128x128.png"
+          }
+        });
 
-        chrome.tabs.executeScript(null, {code: `if (document.getElementById('ih-theme-light-extension')){ 
+        chrome.tabs.executeScript(null, {
+          code: `if (document.getElementById('ih-theme-light-extension')){ 
           document.getElementById('ih-theme-light-extension').parentNode.removeChild(document.getElementById('ih-theme-light-extension'));
-        }`});        
-      }
-      else{
-         chrome.pageAction.setTitle({
-            "tabId": tab.id, 'title': 'IndieHackers Light Theme Enabled (click to toggle)'
-          });
+        }`
+        });
+      } else {
+        chrome.pageAction.setTitle({
+          tabId: tab.id,
+          title: "IndieHackers Light Theme Enabled (click to toggle)"
+        });
 
-         chrome.pageAction.setIcon({
-            "tabId": tab.id, 'path': {
-              "16": "icons/ih-light-16x16.png",
-              "24": "icons/ih-light-24x24.png",
-              "32": "icons/ih-light-32x32.png",        
-              "48": "icons/ih-light-48x48.png",
-              "64": "icons/ih-light-64x64.png",
-              "128": "icons/ih-light-128x128.png"
-            }
-            });
+        chrome.pageAction.setIcon({
+          tabId: tab.id,
+          path: {
+            "16": "icons/ih-light-16x16.png",
+            "24": "icons/ih-light-24x24.png",
+            "32": "icons/ih-light-32x32.png",
+            "48": "icons/ih-light-48x48.png",
+            "64": "icons/ih-light-64x64.png",
+            "128": "icons/ih-light-128x128.png"
+          }
+        });
 
-        chrome.tabs.executeScript(null, {code: ` addStyle(CSS);`});   
+        chrome.tabs.executeScript(null, { code: ` addStyle(CSS);` });
       }
-      });
+    }
+  );
 });

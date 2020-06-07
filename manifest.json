@@ -3,10 +3,10 @@
     "name": "IndieHackers Light Theme",
     "short_name": "ihlt",
     "author": "Loftie Ellis",
-    "homepage_url": "https://github.com/lpellis",
+    "homepage_url": "https://blog.pagewatch.dev/project/indiehackers-light-theme",
     "version": "0.2.0",
     "description": "A simple light theme for IndieHackers.",
-    "permissions": [ "https://www.indiehackers.com/", "webNavigation" , "declarativeContent"],
+    "permissions": [ "https://www.indiehackers.com/", "declarativeContent"],
     "background": {
       "scripts": ["extension.js"],
       "persistent": false
