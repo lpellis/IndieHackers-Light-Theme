@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "name": "IndieHackers Light Theme",
+    "short_name": "ihlt",
+    "author": "Loftie Ellis",
+    "homepage_url": "https://github.com/lpellis",
+    "version": "0.2.0",
+    "description": "A simple light theme for IndieHackers.",
+    "permissions": [ "https://www.indiehackers.com/", "webNavigation" , "declarativeContent"],
+    "background": {
+      "scripts": ["extension.js"],
+      "persistent": false
+    },
+    "page_action": {
+      "default_icon": {
+        "16": "icons/ih-light-16x16.png",
+        "24": "icons/ih-light-24x24.png",
+        "32": "icons/ih-light-32x32.png",        
+        "48": "icons/ih-light-48x48.png",
+        "64": "icons/ih-light-64x64.png",
+        "128": "icons/ih-light-128x128.png"
+      },
+      "default_title": "IndieHackers Light Theme Enabled (click to toggle)"
+    },
+    "web_accessible_resources" : [ "extension.js" ],
+    "icons": {
+        "16": "icons/ih-light-16x16.png",
+        "24": "icons/ih-light-24x24.png",
+        "32": "icons/ih-light-32x32.png",        
+        "48": "icons/ih-light-48x48.png",
+        "64": "icons/ih-light-64x64.png",
+        "128": "icons/ih-light-128x128.png"
+      }
+  }
