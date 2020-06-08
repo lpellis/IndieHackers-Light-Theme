@@ -1,7 +1,9 @@
-# ih-lightmode
+# IndieHackers Light Theme
 
 > Browser extension that adds a simple light mode to https://indiehackers.com
-
+>
+> Install for Chrome:
+> https://chrome.google.com/webstore/detail/indiehackers-light-theme/kiogoigihiehfmimipmlihenfphaefcp
 
 ## Preview
 
